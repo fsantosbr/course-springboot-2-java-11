@@ -21,7 +21,7 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private UserRepository userRepository;
-	// @AutoWired is an annotation that makes dependencies (week) to other class
+	// @AutoWired is an annotation that makes dependency injection (week) to other class
 
 	@Override
 	public void run(String... args) throws Exception {
