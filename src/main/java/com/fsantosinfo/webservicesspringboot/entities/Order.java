@@ -36,7 +36,7 @@ public class Order implements Serializable{
 	@JoinColumn(name = "client_id")
 	private User client;
 	
-	@OneToMany(mappedBy = "id.order")
+	@OneToMany(mappedBy = "id.order") // we used "id.order" cause: OrderItem class has an attribute named 'id' of the type OrderItemPK that has an attribute named 'order' of the type Order.
 	private Set<OrderItem> items = new HashSet<>();
 	
 	public Order() {
