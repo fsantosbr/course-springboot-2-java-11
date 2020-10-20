@@ -3,6 +3,8 @@ package com.fsantosinfo.webservicesspringboot.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -49,12 +51,16 @@ public class UserService {
 	}
 	
 	public User update(Long id, User obj) {
-		User entity = repository.getOne(id);
-		/* getOne() method won't make any access to the db, it'll only keep the object checked for the jpa and then we can perform a task.
-		 * It's better to use it instead of findById() that will actually access the data base
-		 */
-		updateData(entity, obj);
-		return repository.save(entity);
+		try{
+			User entity = repository.getOne(id);		
+			/* getOne() method won't make any access to the db, it'll only keep the object checked for the jpa and then we can perform a task.
+			 * It's better to use it instead of findById() that will actually access the data base
+			 */
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 	
 	private void updateData(User entity, User obj) {
