@@ -33,9 +33,24 @@ public class UserService {
 		return repository.save(obj);
 	}
 	
-	//x
+	
 	public void delete(Long id) {
 		repository.deleteById(id);
+	}
+	
+	public User update(Long id, User obj) {
+		User entity = repository.getOne(id);
+		/* getOne() method won't make any access to the db, it'll only keep the object checked for the jpa and then we can perform a task.
+		 * It's better to use it instead of findById() that will actually access the data base
+		 */
+		updateData(entity, obj);
+		return repository.save(entity);
+	}
+	
+	private void updateData(User entity, User obj) {
+		entity.setName(obj.getName());
+		entity.setEmail(obj.getEmail());
+		entity.setPhone(obj.getPhone());		
 	}
 }
 
